@@ -2,10 +2,9 @@ from django.conf import settings
 from django.urls import reverse
 from django.db import models
 from django.utils.text import slugify
-
 import markdown
-
 from django.contrib.auth import get_user_model
+
 User = get_user_model()
 
 # https://docs.djangoproject.com/en/1.11/howto/custom-template-tags/#inclusion-tags
@@ -35,8 +34,8 @@ class Group(models.Model):
         ordering = ["name"]
 
 class GroupMember(models.Model):
-    group = models.ForeignKey(Group, related_name="memberships",on_delete=models.PROTECT)
-    user = models.ForeignKey(User,related_name='user_groups',on_delete=models.PROTECT)
+    group = models.ForeignKey(Group, related_name="memberships",on_delete=models.CASCADE)
+    user = models.ForeignKey(User,related_name='user_groups',on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user.username
