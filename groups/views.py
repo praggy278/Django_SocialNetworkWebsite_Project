@@ -20,7 +20,6 @@ class SingleGroup(generic.DetailView):
 class ListGroups(generic.ListView):
     model = Group
 
-
 class JoinGroup(LoginRequiredMixin, generic.RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
@@ -39,7 +38,6 @@ class JoinGroup(LoginRequiredMixin, generic.RedirectView):
             messages.success(self.request,"You are now a member of the {} group.".format(group.name))
 
         return super().get(request, *args, **kwargs)
-
 
 class LeaveGroup(LoginRequiredMixin, generic.RedirectView):
 
