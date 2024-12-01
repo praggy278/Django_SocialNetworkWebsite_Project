@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.http import Http404
 from django.views import generic
 from braces.views import SelectRelatedMixin
+from groups.models import Group
 from . import forms
 from . import models
 from django.contrib.auth import get_user_model
@@ -12,7 +13,12 @@ User = get_user_model()
 
 class PostList(SelectRelatedMixin, generic.ListView):
     model = models.Post
-    select_related = ("user", "group")
+    select_related = ("user", "group") #user and group that the post belongs to
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['groups'] = Group.objects.all()  # Add all groups to the context
+        return context
 
 class UserPosts(generic.ListView):
     model = models.Post
@@ -63,7 +69,7 @@ class CreatePost(LoginRequiredMixin, SelectRelatedMixin, generic.CreateView):
 class DeletePost(LoginRequiredMixin, SelectRelatedMixin, generic.DeleteView):
     model = models.Post
     select_related = ("user", "group")
-    success_url = reverse_lazy("posts:all")
+    success_url = reverse_lazy("posts:for_user")
 
     def get_queryset(self):
         queryset = super().get_queryset()
