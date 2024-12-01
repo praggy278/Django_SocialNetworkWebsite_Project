@@ -192,14 +192,18 @@ function animate() {
 }
 
 canvas.onclick = function(e) {
-  giveBirth(e, birthToGive);
+  var rect = canvas.getBoundingClientRect(); 
+  var x = e.clientX - rect.left; 
+  var y = e.clientY - rect.top;  
+
+  giveBirth(x, y, birthToGive); 
 }
 
-function giveBirth(e, u) {
+function giveBirth(x, y, u) {
   var i = persons.length;
   persons[i] = new Firefly(i);
-  persons[i].x = e.layerX;
-  persons[i].y = e.layerY;
+  persons[i].x = x;
+  persons[i].y = y;
 
-  if (u > 1) giveBirth(e, u - 1);
+  if (u > 1) giveBirth(x, y, u - 1);
 }

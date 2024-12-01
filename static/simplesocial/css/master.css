@@ -1,6 +1,17 @@
-body {
+body, html {
   margin: 0;
-  overflow: hidden;
-  background-color: black;
-  color:white;
+  height: 100%; 
+  background-color: #251886;
+  color: white;
+}
+
+#scrollable-post-list { 
+  overflow-y: auto; 
+  padding-right: 10px; 
+  scroll-behavior: smooth; 
+}
+
+.mycontent{
+  font-family: "Fraunces", serif;
+  margin: auto;
 }
